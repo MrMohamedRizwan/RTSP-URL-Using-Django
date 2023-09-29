@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RTSP Video Stream</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center; 
+        }
+
+        #video-player {
+            max-width: 100%;
+            height: auto;
+        }
+
+        #controls {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Video Stream</h1>
+        <img id="video-player" src="{{ url_for('video_feed') }}" alt="Video Stream">
+        <div id="controls">
+            <button id="play-pause-button">Play</button>
+            <input id="volume-slider" type="range" min="0" max="1" step="0.1" value="1">
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById("video-player");
+        const playPauseButton = document.getElementById("play-pause-button");
+        const volumeSlider = document.getElementById("volume-slider");
+
+        let isPlaying = false;
+
+        playPauseButton.addEventListener("click", () => {
+            if (isPlaying) {
+                video.pause();
+                playPauseButton.textContent = "Play";
+            } else {
+                video.play();
+                playPauseButton.textContent = "Pause";
+            }
+            isPlaying = !isPlaying;
+        });
+
+        volumeSlider.addEventListener("input", () => {
+            video.volume = volumeSlider.value;
+        });
+    </script>
+</body>
+</html>
